@@ -125,18 +125,15 @@ namespace Koen {
 				// Arrange
 				BITMASK bitmask[64] = {};
 
-				// Act
 				for (int f = 0; f < 8; ++f)
 				{
+					// Act
 					for (int r = 0; r < 8; ++r)
 					{
 						BIT_SET(bitmask[f], f + (r * 8));
 					}
-				}
 
-				// Assert
-				for (int f = 0; f < 8; ++f)
-				{
+					// Assert
 					Assert::AreEqual<BITMASK>(bitmask[f % 8], bm_file[f]);
 				}
 			}
@@ -166,49 +163,52 @@ namespace Koen {
 			TEST_METHOD(test_bm_kingmoves)
 			{
 				// Arrange
-				BITMASK kingmove[64];
+				BITMASK kingmoves[64];
 
 				for (int s = 0; s < 64; ++s)
 				{
-					kingmove[s] = 0;
+					kingmoves[s] = 0;
 
+					// Act
 					BITMASK kingsquare = bm_squares[s];
-
 				  if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_A]))
 					{
-						kingmove[s] |= kingsquare >> 9; // NW
+						kingmoves[s] |= kingsquare >> 9; // NW
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8]))
 					{
-						kingmove[s] |= kingsquare >> 8; // North
+						kingmoves[s] |= kingsquare >> 8; // North
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_H]))
 					{
-						kingmove[s] |= kingsquare >> 7; // NE
+						kingmoves[s] |= kingsquare >> 7; // NE
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_file[FILE_H]))
 					{
-						kingmove[s] |= kingsquare << 1; // E
+						kingmoves[s] |= kingsquare << 1; // E
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1] | bm_file[FILE_H]))
 					{
-						kingmove[s] |= kingsquare << 9; // SE
+						kingmoves[s] |= kingsquare << 9; // SE
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1]))
 					{
-						kingmove[s] |= kingsquare << 8; // S
+						kingmoves[s] |= kingsquare << 8; // S
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1] | bm_file[FILE_A]))
 					{
-						kingmove[s] |= kingsquare << 7; // SW
+						kingmoves[s] |= kingsquare << 7; // SW
 					}
 					if (!BITMASK_CHECK_ANY(kingsquare, bm_file[FILE_A]))
 					{
-						kingmove[s] |= kingsquare >> 1; // W
+						kingmoves[s] |= kingsquare >> 1; // W
 					}
+
+					// Assert
+					Assert::AreEqual(kingmoves[s], bm_kingmoves[s]);
 				}
 
-				Logger::WriteMessage(toBitMaskArrayVariable(kingmove, "bm_kingmoves").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(kingmoves, "bm_kingmoves").c_str());
 			}
 		};
 	}
