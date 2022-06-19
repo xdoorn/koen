@@ -156,9 +156,9 @@ namespace Koen {
 					BIT_CLEAR(xbitmask[s], s);
 				}
 
-				Logger::WriteMessage(toBitMaskArrayVariable(bitmask, "bb_squares").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(bitmask, "bm_squares").c_str());
 				Logger::WriteMessage("\n\n");
-				Logger::WriteMessage(toBitMaskArrayVariable(xbitmask, "bb_xsquares").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(xbitmask, "bm_xsquares").c_str());
 			}
 		};
 	}
