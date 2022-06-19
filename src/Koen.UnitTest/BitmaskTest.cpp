@@ -141,6 +141,7 @@ namespace Koen {
 				}
 			}
 
+
 			TEST_METHOD(test_bm_squares)
 			{ 
 				// Arrange
@@ -159,6 +160,55 @@ namespace Koen {
 				Logger::WriteMessage(toBitMaskArrayVariable(bitmask, "bm_squares").c_str());
 				Logger::WriteMessage("\n\n");
 				Logger::WriteMessage(toBitMaskArrayVariable(xbitmask, "bm_xsquares").c_str());
+			}
+
+
+			TEST_METHOD(test_bm_kingmoves)
+			{
+				// Arrange
+				BITMASK kingmove[64];
+
+				for (int s = 0; s < 64; ++s)
+				{
+					kingmove[s] = 0;
+
+					BITMASK kingsquare = bm_squares[s];
+
+				  if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_A]))
+					{
+						kingmove[s] |= kingsquare >> 9; // NW
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8]))
+					{
+						kingmove[s] |= kingsquare >> 8; // North
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_H]))
+					{
+						kingmove[s] |= kingsquare >> 7; // NE
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_file[FILE_H]))
+					{
+						kingmove[s] |= kingsquare << 1; // E
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1] | bm_file[FILE_H]))
+					{
+						kingmove[s] |= kingsquare << 9; // SE
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1]))
+					{
+						kingmove[s] |= kingsquare << 8; // S
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_1] | bm_file[FILE_A]))
+					{
+						kingmove[s] |= kingsquare << 7; // SW
+					}
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_file[FILE_A]))
+					{
+						kingmove[s] |= kingsquare >> 1; // W
+					}
+				}
+
+				Logger::WriteMessage(toBitMaskArrayVariable(kingmove, "bm_kingmoves").c_str());
 			}
 		};
 	}
