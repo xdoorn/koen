@@ -27,6 +27,9 @@
     <ClInclude Include="bitmask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="generate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bitmask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
