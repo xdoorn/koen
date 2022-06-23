@@ -7,6 +7,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../Koen.Chess/bitmask.h"
+#include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -117,6 +118,23 @@ namespace Koen {
 				// Assert 
 				Assert::IsFalse(BITMASK_CHECK_ANY(bitmask, bm_rank[RANK_1]), L"BITMASK_CHECK_ANY 1th rank = FALSE");
 				Assert::IsTrue(BITMASK_CHECK_ANY(bitmask, bm_file[FILE_A] | bm_rank[RANK_1]), L"BITMASK_CHECK_ANY A file and 1th rank = TRUE");
+			}
+
+
+			TEST_METHOD(test_bitScan)
+			{
+				// Arrange
+				BITMASK bm = bm_camp[W];
+
+				// Act
+				while (bm)
+				{
+					int s = bitScan(bm);
+					BIT_CLEAR(bm, s);
+
+					// Assert
+					Assert::IsTrue(s >= A4 && s <= H1);
+				}
 			}
 
 

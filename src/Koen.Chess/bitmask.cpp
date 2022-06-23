@@ -9,6 +9,13 @@
 #include <format>
 
 
+int bitScan(BITMASK i_bitmask)
+{
+  _ASSERT(i_bitmask);
+  return bitScanIndices[((i_bitmask ^ (i_bitmask - 1)) * bm_debruijn64) >> 58];
+}
+
+
 string toBitMaskHexString(BITMASK i_bitmask)
 {
   return format("0x{:0>16X}", i_bitmask);
