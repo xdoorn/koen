@@ -2,21 +2,36 @@
 #include "generate.h"
 
 
-vector<Move> generateMoves()
+vector<Move> generateMoves(BitBoard i_bitBoard)
 {
   vector<Move> moves;
 
-  Move move1;
-  move1.from = D1;
-  move1.to = D8;
-  moves.push_back(move1);
+  BITMASK bm1 = i_bitBoard.pieces[i_bitBoard.side][K];
+  if (bm1)
+  { // Expect always one king on the board, therefore no loop here.
+    int from = bitScan(bm1);
 
-  Move move2;
-  move2.from = A8;
-  move2.to = H1;
-  moves.push_back(move2);
+    BITMASK bm2 = bm_kingmoves[from] & ~i_bitBoard.army[i_bitBoard.side];
+    while (bm2)
+    {
+      int to = bitScan(bm2);
+      addMove(moves, from, to);
+      
+      // Remove the bit to go to next bit later.
+      BIT_CLEAR(bm2, to);
+    }
+  }
 
   return moves;
+}
+
+
+void addMove(vector<Move>& io_moves, int i_from, int i_to)
+{
+  Move move;
+  move.from = i_from;
+  move.to = i_to;
+  io_moves.push_back(move);
 }
 
 

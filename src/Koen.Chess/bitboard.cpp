@@ -23,6 +23,8 @@ void clearBitBoard(BitBoard& io_bitBoard)
   io_bitBoard.enpassant = bm_empty;
   io_bitBoard.occupied = bm_empty;
   io_bitBoard.xoccupied = bm_full;
+  io_bitBoard.side = W;
+  io_bitBoard.xside = B;
 }
 
 
@@ -47,6 +49,8 @@ void startBitBoard(BitBoard& io_bitBoard)
   io_bitBoard.enpassant = bm_empty;
   io_bitBoard.occupied = io_bitBoard.army[W] | io_bitBoard.army[B];
   io_bitBoard.xoccupied = ~io_bitBoard.occupied;
+  io_bitBoard.side = W;
+  io_bitBoard.xside = B;
 }
 
 
@@ -68,8 +72,8 @@ void fenToBitBoard(string i_fen, BitBoard& io_bitBoard)
       continue;
     }
 
-    int c = colorSymbolToInteger[(int) symbol - 'A'];
-    int p = pieceSymbolToInteger[(int) symbol - 'A'];
+    int c = colorSymbolToInteger[symbol - 'A'];
+    int p = pieceSymbolToInteger[symbol - 'A'];
 
     BIT_SET(io_bitBoard.pieces[c][p], s);
     BIT_SET(io_bitBoard.army[c], s);

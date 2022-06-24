@@ -27,5 +27,6 @@ const string squareNames[64]
 };
 
 
-vector<Move> generateMoves();
+vector<Move> generateMoves(BitBoard i_bitBoard);
+void addMove(vector<Move>& io_moves, int i_from, int i_to);
 string toMoveString(Move i_move);

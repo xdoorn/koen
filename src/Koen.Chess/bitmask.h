@@ -29,8 +29,16 @@ using namespace std;
 // Colors
 enum { W, B};
 
-// Pieces. The bishop is omitted because it is already indexed in Colors.
-enum { P, N = 2, R, Q, K};
+// Pieces. 
+enum 
+{ 
+  P,     // Pawn
+         // B The bishop is omitted because it is already indexed in Colors.
+  N = 2, // Knight
+  R,     // Rook
+  Q,     // Queen
+  K,     // King
+};
 
 // Square, file and rank indices.
 enum {

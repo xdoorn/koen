@@ -18,6 +18,8 @@ typedef struct
   BITMASK xoccupied;
   BITMASK castle;
   BITMASK enpassant;
+  int side;
+  int xside;
 } BitBoard;
 
 
