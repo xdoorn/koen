@@ -32,7 +32,7 @@ namespace Koen {
 				string left = trim(leftRight.at(0));
 				string right = trim(leftRight.at(1));
 
-				for (auto leftItem : split(left, ' '))
+				for (auto leftItem : split(left))
 				{
 					if (leftItem == "W" || leftItem == "B")
 					{
@@ -67,7 +67,7 @@ namespace Koen {
 
 				vector<Move> moves = generateMoves(bitboard);
 
-				for (string rightItem : split(right, ' '))
+				for (string rightItem : split(right))
 				{
 					bool hasFound = false;
 					
@@ -90,6 +90,7 @@ namespace Koen {
 			TEST_METHOD(test_Generate)
 			{
 				assertGenerateMoves("Ke1 Rd1f1 => d2 e2 f2");
+				assertGenerateMoves("B ke1 rd1f1 => d2 e2 f2");
 			}
 
 
