@@ -31,22 +31,24 @@ const string pieceToSymbol[2][6]
 
 
 // Piece symbol like PNBRQK & pnbrqk to color integer conversion (e.g. W = 0, B = 1, Else = 9)
-// The table starts relative from ASCII's 'A'.
+// The table starts relative from ASCII's 'A' and ends with 'z'
 const int colorSymbolToInteger[]
 {
   9, W, 9, 9, 9, 9, 9, 9, 9, 9, W, 9, 9, W, 9, W, W, W,
-  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+  9, 9, 9, 9, 9, W, 9, 9, 9, 9, 9, 9, 9, 9,
   9, B, 9, 9, 9, 9, 9, 9, 9, 9, B, 9, 9, B, 9, B, B, B,
+  9, 9, 9, 9, 9, B, 9, 9
 };
 
 
 // Piece symbol like PNBRQK & pnbrqk to piece integer conversion (e.g. P = 0, B = 1, N = 2, R = 3, Q = 4, K = 5, Else = 9)
-// The table starts relative from ASCII's 'A'.
+// The table starts relative from ASCII's 'A' and ends with 'z'
 const int pieceSymbolToInteger[]
 {
   9, B, 9, 9, 9, 9, 9, 9, 9, 9, K, 9, 9, N, 9, P, Q, R,
   9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-  9, B, 9, 9, 9, 9, 9, 9, 9, 9, K, 9, 9, N, 9, P, Q, R,
+  9, B, 9, 9, 9, 9, 9, 9, 9, 9, K, 9, 9, N, 9, P, Q, R, 
+  9, 9, 9, 9, 9, 9, 9, 9
 };
 
 
