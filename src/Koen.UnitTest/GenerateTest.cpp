@@ -26,6 +26,8 @@ namespace Koen {
 			TEST_METHOD(test_Generate)
 			{
 				assertGenerateMoves("Ke1 Xd1f1 => d2 e2 f2 !d1 !f1");
+				assertGenerateMoves("Ke1 xd1f1 => d2 e2 f2 xd1 xf1");
+				assertGenerateMoves("B ke1 Xd1f1 => d2 e2 f2 xd1 xf1");
 				assertGenerateMoves("B ke1 xd1f1 => d2 e2 f2 !d1 !f1");
 			}
 
@@ -33,16 +35,23 @@ namespace Koen {
 			TEST_METHOD(test_ToMoveString)
 			{
 				// Arrange
-				Move move;
-				move.from = A1;
-				move.to = H8;
-
+				Move normalMove, captureMove;
+				normalMove.from = A1;
+				captureMove.from = A1;
+				normalMove.to = H8;
+				captureMove.to = H8;
+				normalMove.capturedPiece = E;
+				captureMove.capturedPiece = P;
+				
 				// Act
-				string moveStr = toMoveString(move);
+				string normalMoveStr = toMoveString(normalMove);
+				string captureMoveStr = toMoveString(captureMove);
 
 				// Assert
-				Logger::WriteMessage(moveStr.c_str());
-				Assert::AreEqual<string>("a1h8", moveStr);
+				Logger::WriteMessage(normalMoveStr.c_str());
+				Logger::WriteMessage(captureMoveStr.c_str());
+				Assert::AreEqual<string>("a1h8", normalMoveStr);
+				Assert::AreEqual<string>("a1xh8", captureMoveStr);
 			}
 		};
 	}

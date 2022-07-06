@@ -18,37 +18,51 @@ typedef struct
   BITMASK xoccupied;
   BITMASK castle;
   BITMASK enpassant;
+  int board[64];
   int side;
   int xside;
 } BitBoard;
 
 
-const string pieceToSymbol[2][6]
+const string pieceToSymbol[2][7]
 {
-  { "P", "B", "N", "R", "Q", "K"},
-  { "p", "b", "n", "r", "q", "k"},
+  { "P", "B", "N", "R", "Q", "K", "X"},
+  { "p", "b", "n", "r", "q", "k", "x"},
 };
 
 
-// Piece symbol like PNBRQK & pnbrqk to color integer conversion (e.g. W = 0, B = 1, Else = 9)
+// Piece symbol like PNBRQK & pnbrqk to color integer conversion (e.g. W = 0, B = 1, E = 7)
 // The table starts relative from ASCII's 'A' and ends with 'z'
 const int colorSymbolToInteger[]
 {
-  9, W, 9, 9, 9, 9, 9, 9, 9, 9, W, 9, 9, W, 9, W, W, W,
-  9, 9, 9, 9, 9, W, 9, 9, 9, 9, 9, 9, 9, 9,
-  9, B, 9, 9, 9, 9, 9, 9, 9, 9, B, 9, 9, B, 9, B, B, B,
-  9, 9, 9, 9, 9, B, 9, 9
+  W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+  W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+  B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+  B, B, B, B, B, B, B, B
 };
 
 
-// Piece symbol like PNBRQK & pnbrqk to piece integer conversion (e.g. P = 0, B = 1, N = 2, R = 3, Q = 4, K = 5, Else = 9)
+// Piece symbol like PNBRQK & pnbrqk to piece integer conversion (e.g. P = 0, B = 1, N = 2, R = 3, Q = 4, K = 5, X = 6, E = 7)
 // The table starts relative from ASCII's 'A' and ends with 'z'
 const int pieceSymbolToInteger[]
 {
-  9, B, 9, 9, 9, 9, 9, 9, 9, 9, K, 9, 9, N, 9, P, Q, R,
-  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-  9, B, 9, 9, 9, 9, 9, 9, 9, 9, K, 9, 9, N, 9, P, Q, R, 
-  9, 9, 9, 9, 9, 9, 9, 9
+  X, B, X, X, X, X, X, X, X, X, K, X, X, N, X, P, Q, R,
+  X, X, X, X, X, X, X, X, X, X, X, X, X, X,
+  X, B, X, X, X, X, X, X, X, X, K, X, X, N, X, P, Q, R, 
+  X, X, X, X, X, X, X, X
+};
+
+
+const int initialBoard[64] =
+{
+  R, N, B, Q, K, B, N, R,
+  P, P, P, P, P, P, P, P,
+  E, E, E, E, E, E, E, E,
+  E, E, E, E, E, E, E, E,
+  E, E, E, E, E, E, E, E,
+  E, E, E, E, E, E, E, E,
+  P, P, P, P, P, P, P, P,
+  R, N, B, Q, K, B, N, R
 };
 
 

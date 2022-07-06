@@ -38,6 +38,8 @@ enum
   R,     // Rook
   Q,     // Queen
   K,     // King
+  X,     // Any piece (used in unittests)
+  E,     // Empty
 };
 
 // Square, file and rank indices.

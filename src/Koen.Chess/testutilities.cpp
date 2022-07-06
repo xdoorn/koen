@@ -35,7 +35,7 @@ BitBoard arrangeBitBoard(string i_setupExpression)
 				int rank = 7 - (item[i + 2] - '1');
 				int s = (rank * 8) + file;
 
-				if (p != 9)
+				if (p != X)
 				{
 					BIT_SET(bitboard.pieces[c][p], s);
 				}
@@ -43,6 +43,8 @@ BitBoard arrangeBitBoard(string i_setupExpression)
 				BIT_SET(bitboard.army[c], s);
 				BIT_SET(bitboard.occupied, s);
 				BIT_CLEAR(bitboard.xoccupied, s);
+
+				bitboard.board[s] = p;
 			}
 		}
 	}
@@ -61,8 +63,7 @@ string assertMoves(BitBoard i_bitBoard, vector<Move> i_moves, string i_expectedM
 		bool hasFound = false;
 		for (Move move : i_moves)
 		{
-			string moveToString = toMoveString(move).substr(2, 2);
-			
+			string moveToString = toMoveString(move).substr(2);
 			if (compareMoveString == moveToString)
 			{
 				hasFound = true;

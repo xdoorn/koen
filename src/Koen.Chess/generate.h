@@ -11,6 +11,7 @@ typedef struct
 {
   int from;
   int to;
+  int capturedPiece;
 } Move;
 
 
@@ -29,4 +30,5 @@ const string squareNames[64]
 
 vector<Move> generateMoves(BitBoard i_bitBoard);
 void addMove(vector<Move>& io_moves, int i_from, int i_to);
+void addMoveCapture(vector<Move>& io_moves, int i_from, int i_to, int i_capturedPiece);
 string toMoveString(Move i_move);

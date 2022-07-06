@@ -17,6 +17,11 @@ void clearBitBoard(BitBoard& io_bitBoard)
     io_bitBoard.pieces[c][p] = bm_empty;
   }
 
+  for (int s = 0; s < 64; ++s)
+  {
+    io_bitBoard.board[s] = E;
+  }
+
   io_bitBoard.army[W] = bm_empty;
   io_bitBoard.army[B] = bm_empty;
   io_bitBoard.castle = bm_empty;
@@ -51,6 +56,11 @@ void startBitBoard(BitBoard& io_bitBoard)
   io_bitBoard.xoccupied = ~io_bitBoard.occupied;
   io_bitBoard.side = W;
   io_bitBoard.xside = B;
+
+  for (int s = 0; s < 64; ++s)
+  {
+    io_bitBoard.board[s] = initialBoard[s];
+  }
 }
 
 
@@ -79,6 +89,7 @@ void fenToBitBoard(string i_fen, BitBoard& io_bitBoard)
     BIT_SET(io_bitBoard.army[c], s);
     BIT_SET(io_bitBoard.occupied, s);
     BIT_CLEAR(io_bitBoard.xoccupied, s);
+    io_bitBoard.board[s] = p;
 
     ++s;
   }
@@ -160,18 +171,11 @@ string toBitBoard2DString(BitBoard i_bitBoard)
     }
     else
     {
-      for (int cp = 0; cp < 12; ++cp)
-      {
-        int c = cp % 2;
-        int p = cp / 2;
-
-        if (BIT_CHECK(i_bitBoard.pieces[c][p], s))
-        {
-          result += ' ' + pieceToSymbol[c][p];
-        }
-      }
+      int c = BIT_CHECK(i_bitBoard.army[W], s) ? W : B;
+      int p = i_bitBoard.board[s];
+      result += ' ' + pieceToSymbol[c][p];
     }
-
+    
     if (file == FILE_H)
     {
       result += "\n";
