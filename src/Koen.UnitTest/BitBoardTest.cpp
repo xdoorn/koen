@@ -46,7 +46,7 @@ namespace Koen {
 			{
 				// Arrange
 				BitBoard bitBoard;
-				string expectedFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+				string expectedFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 				// Act
 				fenToBitBoard(expectedFen, bitBoard);

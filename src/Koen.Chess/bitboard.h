@@ -16,11 +16,13 @@ typedef struct
   BITMASK army[2];
   BITMASK occupied;
   BITMASK xoccupied;
-  BITMASK castle;
-  BITMASK enpassant;
   int board[64];
   int side;
   int xside;
+  BITMASK castle;
+  BITMASK enpassant;
+  int halfMove50DrawRule;
+  int fullMoveNumber;
 } BitBoard;
 
 
