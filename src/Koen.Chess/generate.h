@@ -9,6 +9,7 @@ using namespace std;
 
 typedef struct
 {
+  int piece;
   int from;
   int to;
   int capturedPiece;
@@ -29,6 +30,9 @@ const string squareNames[64]
 
 
 vector<Move> generateMoves(BitBoard i_bitBoard);
-void addMove(vector<Move>& io_moves, int i_from, int i_to);
-void addMoveCapture(vector<Move>& io_moves, int i_from, int i_to, int i_capturedPiece);
+void addMove(vector<Move>& io_moves, int i_piece, int i_from, int i_to);
+void addMoveCapture(vector<Move>& io_moves, int i_piece, int i_from, int i_to, int i_capturedPiece);
+void makeMove(Move i_move, BitBoard& io_bitBoard);
+void unmakeMove(Move i_move, BitBoard& io_bitBoard);
 string toMoveString(Move i_move);
+

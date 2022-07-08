@@ -22,6 +22,34 @@ string toBitMaskHexString(BITMASK i_bitmask)
 }
 
 
+string toBitMask1DString(BITMASK i_bitmask, string i_rankSeparator)
+{
+  string result = "";
+
+  for (int s = 0; s < 64; s++)
+  {
+    int file = s % 8;
+    int rank = 8 - (s / 8);
+
+    if (BIT_CHECK(i_bitmask, s))
+    {
+      result += " 1";
+    }
+    else
+    {
+      result += " 0";
+    }
+
+    if (file == FILE_H)
+    {
+      result += i_rankSeparator;
+    }
+  }
+
+  return result;
+}
+
+
 string toBitMask2DString(BITMASK i_bitmask, bool i_includeHexValue)
 {
   string result = "";

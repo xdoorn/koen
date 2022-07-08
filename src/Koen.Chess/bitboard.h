@@ -68,7 +68,8 @@ const int initialBoard[64] =
 
 void clearBitBoard(BitBoard& io_bitBoard);
 void startBitBoard(BitBoard& io_bitBoard);
+void setupBitBoard(BitBoard& io_bitBoard, int i_color, int i_piece, int i_square);
 void fenToBitBoard(string i_fen, BitBoard& io_bitBoard);
 string bitBoardToFen(BitBoard i_bitBoard);
+string toBitBoard1DString(BitBoard i_bitBoard);
 string toBitBoard2DString(BitBoard i_bitBoard);
-

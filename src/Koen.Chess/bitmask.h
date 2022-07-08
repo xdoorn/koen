@@ -123,5 +123,6 @@ const BITMASK bm_debruijn64 = 0x03f79d71b4cb0a89;
 int bitScan(BITMASK i_bitmask);
 
 string toBitMaskHexString(BITMASK i_bitmask);
+string toBitMask1DString(BITMASK i_bitmask, string i_rankSeparator = " /");
 string toBitMask2DString(BITMASK i_bitmask, bool i_includeHexValue = true);
 string toBitMaskArrayVariable(BITMASK i_bitmask[64], string i_variableName);

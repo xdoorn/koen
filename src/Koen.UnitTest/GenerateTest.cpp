@@ -32,6 +32,31 @@ namespace Koen {
 			}
 
 
+			TEST_METHOD(test_MakeMove)
+			{
+				// Arrange
+				BitBoard bitBoard;
+				fenToBitBoard("8/8/8/3k4/4Q3/8/8/8", bitBoard); // TODO + " w - -0 1"
+				bitBoard.side = B;
+				bitBoard.xside = W;
+
+				Move move;
+				move.piece = K;
+				move.from = D5;
+				move.to = E4;
+				move.capturedPiece = Q;
+				
+				// Act
+				makeMove(move, bitBoard);
+				
+				// Assert
+				string expectedFen = "8/8/8/8/4k3/8/8/8"; // TODO + " w - -0 1"
+				Logger::WriteMessage(toBitBoard1DString(bitBoard).c_str());
+
+				Assert::AreEqual(expectedFen, bitBoardToFen(bitBoard));
+			}
+
+
 			TEST_METHOD(test_ToMoveString)
 			{
 				// Arrange
