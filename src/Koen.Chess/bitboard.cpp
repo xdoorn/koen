@@ -20,7 +20,7 @@ void clearBitBoard(BitBoard& io_bitBoard)
 
   for (int s = 0; s < 64; ++s)
   {
-    io_bitBoard.board[s] = E;
+    io_bitBoard.squares[s] = E;
   }
 
   io_bitBoard.army[W] = bm_empty;
@@ -56,7 +56,7 @@ void startBitBoard(BitBoard& io_bitBoard)
   io_bitBoard.xoccupied = ~io_bitBoard.occupied;
   for (int s = 0; s < 64; ++s)
   {
-    io_bitBoard.board[s] = initialBoard[s];
+    io_bitBoard.squares[s] = initialBoard[s];
   }
 
   io_bitBoard.side = W;
@@ -70,7 +70,7 @@ void startBitBoard(BitBoard& io_bitBoard)
 
 void setupBitBoard(BitBoard& io_bitBoard, int i_color, int i_piece, int i_square)
 {
-  io_bitBoard.board[i_square] = i_piece;
+  io_bitBoard.squares[i_square] = i_piece;
 
   if (i_piece == E)
   {
@@ -136,7 +136,7 @@ void fenToBitBoard(string i_fen, BitBoard& io_bitBoard)
     BIT_SET(io_bitBoard.army[c], s);
     BIT_SET(io_bitBoard.occupied, s);
     BIT_CLEAR(io_bitBoard.xoccupied, s);
-    io_bitBoard.board[s] = p;
+    io_bitBoard.squares[s] = p;
 
     ++s;
   }
@@ -337,7 +337,7 @@ string toBitBoard2DString(BitBoard i_bitBoard)
     else
     {
       int c = BIT_CHECK(i_bitBoard.army[W], s) ? W : B;
-      int p = i_bitBoard.board[s];
+      int p = i_bitBoard.squares[s];
       result += ' ' + pieceToSymbol[c][p];
     }
     

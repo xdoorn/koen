@@ -16,7 +16,7 @@ typedef struct
   BITMASK army[2];
   BITMASK occupied;
   BITMASK xoccupied;
-  int board[64];
+  int squares[64];
   int side;
   int xside;
   BITMASK castle;

@@ -19,7 +19,7 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
     while (bm2)
     {
       int to = bitScan(bm2);
-      addMoveCapture(moves, K, from, to, i_bitBoard.board[to]);
+      addMoveCapture(moves, K, from, to, i_bitBoard.squares[to]);
     
       // Remove the bit to go to next bit later.
       BIT_CLEAR(bm2, to);
@@ -71,12 +71,12 @@ void makeMove(Move i_move, BitBoard& io_bitBoard)
   // Move piece from source to destination square.
   BITMASK_FLIP(io_bitBoard.pieces[io_bitBoard.side][i_move.piece], bm_fromTo);
   BITMASK_FLIP(io_bitBoard.army[io_bitBoard.side], bm_fromTo);
-  io_bitBoard.board[i_move.to] = io_bitBoard.board[i_move.from];
+  io_bitBoard.squares[i_move.to] = io_bitBoard.squares[i_move.from];
 
   // Reset source square.
   BITMASK_FLIP(io_bitBoard.occupied, bm_from);
   BITMASK_FLIP(io_bitBoard.xoccupied, bm_from);
-  io_bitBoard.board[i_move.from] = E;
+  io_bitBoard.squares[i_move.from] = E;
 
   // Capture opponent piece on destination square.
   if (i_move.capturedPiece != E)

@@ -44,7 +44,7 @@ BitBoard arrangeBitBoard(string i_setupExpression)
 				BIT_SET(bitboard.occupied, s);
 				BIT_CLEAR(bitboard.xoccupied, s);
 
-				bitboard.board[s] = p;
+				bitboard.squares[s] = p;
 			}
 		}
 	}
