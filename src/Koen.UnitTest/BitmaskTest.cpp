@@ -228,6 +228,37 @@ namespace Koen {
 
 				Logger::WriteMessage(toBitMaskArrayVariable(kingmoves, "bm_kingmoves").c_str());
 			}
+
+
+			TEST_METHOD(test_bm_castle)
+			{
+				// Arrange
+				BITMASK bitmask[64] = { 0 };
+
+				for (int s = 0; s < 64; ++s)
+				{
+					bitmask[s] = 0;
+				}
+
+				BIT_SET(bitmask[0], B1);
+				BIT_SET(bitmask[0], C1);
+				BIT_SET(bitmask[0], D1);
+				BIT_SET(bitmask[1], F1);
+				BIT_SET(bitmask[1], G1);
+				BIT_SET(bitmask[2], B8);
+				BIT_SET(bitmask[2], C8);
+				BIT_SET(bitmask[2], D8);
+				BIT_SET(bitmask[3], F8);
+				BIT_SET(bitmask[3], G8);
+				
+				Logger::WriteMessage(toBitMaskArrayVariable(bitmask, "bm_castle").c_str());
+
+				// Assert
+				Assert::AreEqual<BITMASK>(bitmask[0], bm_castle[W][CASTLE_LONG]);
+				Assert::AreEqual<BITMASK>(bitmask[1], bm_castle[W][CASTLE_SHORT]);
+				Assert::AreEqual<BITMASK>(bitmask[2], bm_castle[B][CASTLE_LONG]);
+				Assert::AreEqual<BITMASK>(bitmask[3], bm_castle[B][CASTLE_SHORT]);
+			}
 		};
 	}
 }

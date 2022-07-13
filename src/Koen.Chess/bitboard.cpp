@@ -152,19 +152,19 @@ void fenToBitBoard(string i_fen, BitBoard& io_bitBoard)
   }
   if (castle.find("K") != string::npos)
   {
-    BIT_SET(io_bitBoard.castle, H1);
+    BITMASK_SET(io_bitBoard.castle, bm_castle[W][CASTLE_SHORT]);
   }
   if (castle.find("Q") != string::npos)
   {
-    BIT_SET(io_bitBoard.castle, A1);
+    BITMASK_SET(io_bitBoard.castle, bm_castle[W][CASTLE_LONG]);
   }
   if (castle.find("k") != string::npos)
   {
-    BIT_SET(io_bitBoard.castle, H8);
+    BITMASK_SET(io_bitBoard.castle, bm_castle[B][CASTLE_SHORT]);
   }
   if (castle.find("q") != string::npos)
   {
-    BIT_SET(io_bitBoard.castle, A8);
+    BITMASK_SET(io_bitBoard.castle, bm_castle[B][CASTLE_LONG]);
   }
 
   // Enpassant
@@ -247,19 +247,19 @@ string bitBoardToFen(BitBoard i_bitBoard)
   else
   {
     fen += " ";
-    if (BIT_CHECK(i_bitBoard.castle, H1))
+    if (BITMASK_CHECK_ALL(i_bitBoard.castle, bm_castle[W][CASTLE_SHORT]))
     {
       fen += "K";
     }
-    if (BIT_CHECK(i_bitBoard.castle, A1))
+    if (BITMASK_CHECK_ALL(i_bitBoard.castle, bm_castle[W][CASTLE_LONG]))
     {
       fen += "Q";
     }
-    if (BIT_CHECK(i_bitBoard.castle, H8))
+    if (BITMASK_CHECK_ALL(i_bitBoard.castle, bm_castle[B][CASTLE_SHORT]))
     {
       fen += "k";
     }
-    if (BIT_CHECK(i_bitBoard.castle, A8))
+    if (BITMASK_CHECK_ALL(i_bitBoard.castle, bm_castle[B][CASTLE_LONG]))
     {
       fen += "q";
     }

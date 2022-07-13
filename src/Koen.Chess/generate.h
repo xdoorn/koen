@@ -28,8 +28,20 @@ const string squareNames[64]
   "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1",
 };
 
+const int castle_source_move[2]
+{
+  E1, E8
+};
+
+const int castle_destination_move[2][2]
+{
+  { C1, G1 },
+  { C8, G8 }
+};
+
 
 vector<Move> generateMoves(BitBoard i_bitBoard);
+void generateCastleMoves(BitBoard i_bitBoard, vector<Move>& io_moves);
 void addMove(vector<Move>& io_moves, int i_piece, int i_from, int i_to);
 void addMoveCapture(vector<Move>& io_moves, int i_piece, int i_from, int i_to, int i_capturedPiece);
 void makeMove(Move i_move, BitBoard& io_bitBoard);

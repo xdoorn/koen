@@ -10,6 +10,8 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
 {
   vector<Move> moves;
 
+  generateCastleMoves(i_bitBoard, moves);
+
   BITMASK bm1 = i_bitBoard.pieces[i_bitBoard.side][K];
   if (bm1)
   { // Expect always one king on the board, therefore no loop here.
@@ -37,6 +39,20 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
   }
 
   return moves;
+}
+
+
+void generateCastleMoves(BitBoard i_bitBoard, vector<Move>& io_moves)
+{
+  if (i_bitBoard.castle & i_bitBoard.xoccupied & bm_castle[i_bitBoard.side][CASTLE_LONG])
+  {
+    addMove(io_moves, K, castle_source_move[i_bitBoard.side], castle_destination_move[i_bitBoard.side][CASTLE_LONG]);
+  }
+
+  if (i_bitBoard.castle & i_bitBoard.xoccupied & bm_castle[i_bitBoard.side][CASTLE_SHORT])
+  {
+    addMove(io_moves, K, castle_source_move[i_bitBoard.side], castle_destination_move[i_bitBoard.side][CASTLE_SHORT]);
+  }
 }
 
 
