@@ -101,6 +101,27 @@ void makeMove(Move i_move, BitBoard& io_bitBoard)
     BITMASK_FLIP(io_bitBoard.army[io_bitBoard.xside], bm_to);
   }
 
+  if (i_move.piece == K)
+  {
+    BITMASK_CLEAR(io_bitBoard.castle, bm_castle[io_bitBoard.side][CASTLE_LONG] | bm_castle[io_bitBoard.side][CASTLE_SHORT]);
+
+    if (abs(i_move.from - i_move.to) == 2)
+    { // Is castle? Then lift over the rook over the king.
+      io_bitBoard.squares[ix_castle_rook_from[i_move.to]] = E;
+      io_bitBoard.squares[ix_castle_rook_to[i_move.to]] = R;
+      BITMASK_FLIP(io_bitBoard.pieces[io_bitBoard.side][R], bm_castle_rook_flip[i_move.to]);
+      BITMASK_FLIP(io_bitBoard.army[io_bitBoard.side], bm_castle_rook_flip[i_move.to]);
+      BITMASK_FLIP(io_bitBoard.occupied, bm_castle_rook_flip[i_move.to]);
+      BITMASK_FLIP(io_bitBoard.xoccupied, bm_castle_rook_flip[i_move.to]);
+    }
+  }
+
+  if (i_move.piece == R)
+  {
+    // Remove castle rights
+    BITMASK_CLEAR(io_bitBoard.castle, bm_castle_rook_from[io_bitBoard.side][i_move.from]);
+  }
+
   // Flip side to move.
   io_bitBoard.side ^= 1;
   io_bitBoard.xside ^= 1;
@@ -116,6 +137,7 @@ string toMoveString(Move i_move)
 {
   string result = "";
 
+  result += pieceToSymbol[W][i_move.piece];
   result += squareNames[i_move.from];
 
   if (i_move.capturedPiece != E)
@@ -124,6 +146,15 @@ string toMoveString(Move i_move)
   }
 
   result += squareNames[i_move.to];
+
+  if (result == "Ke1c1" || result == "Ke8c8")
+  {
+    result = "0-0-0";
+  }
+  else if (result == "Ke1g1" || result == "Ke8g8")
+  {
+    result = "0-0";
+  }
   
   return result;
 }

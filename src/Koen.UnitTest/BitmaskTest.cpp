@@ -233,31 +233,47 @@ namespace Koen {
 			TEST_METHOD(test_bm_castle)
 			{
 				// Arrange
-				BITMASK bitmask[64] = { 0 };
+				BITMASK castle[64] = { 0 };
+				BITMASK castle_rook_flip[64] = { 0 };
 
 				for (int s = 0; s < 64; ++s)
 				{
-					bitmask[s] = 0;
+					castle[s] = 0;
+					castle_rook_flip[s] = 0;
 				}
 
-				BIT_SET(bitmask[0], B1);
-				BIT_SET(bitmask[0], C1);
-				BIT_SET(bitmask[0], D1);
-				BIT_SET(bitmask[1], F1);
-				BIT_SET(bitmask[1], G1);
-				BIT_SET(bitmask[2], B8);
-				BIT_SET(bitmask[2], C8);
-				BIT_SET(bitmask[2], D8);
-				BIT_SET(bitmask[3], F8);
-				BIT_SET(bitmask[3], G8);
+				BIT_SET(castle[0], B1);
+				BIT_SET(castle[0], C1);
+				BIT_SET(castle[0], D1);
+				BIT_SET(castle[1], F1);
+				BIT_SET(castle[1], G1);
+				BIT_SET(castle[2], B8);
+				BIT_SET(castle[2], C8);
+				BIT_SET(castle[2], D8);
+				BIT_SET(castle[3], F8);
+				BIT_SET(castle[3], G8);
+
+				BIT_SET(castle_rook_flip[C1], A1);
+				BIT_SET(castle_rook_flip[C1], D1);
+				BIT_SET(castle_rook_flip[G1], F1);
+				BIT_SET(castle_rook_flip[G1], H1);
+				BIT_SET(castle_rook_flip[C8], A8);
+				BIT_SET(castle_rook_flip[C8], D8);
+				BIT_SET(castle_rook_flip[G8], F8);
+				BIT_SET(castle_rook_flip[G8], H8);
 				
-				Logger::WriteMessage(toBitMaskArrayVariable(bitmask, "bm_castle").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(castle, "bm_castle").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(castle_rook_flip, "bm_castle_rook_flip").c_str());
 
 				// Assert
-				Assert::AreEqual<BITMASK>(bitmask[0], bm_castle[W][CASTLE_LONG]);
-				Assert::AreEqual<BITMASK>(bitmask[1], bm_castle[W][CASTLE_SHORT]);
-				Assert::AreEqual<BITMASK>(bitmask[2], bm_castle[B][CASTLE_LONG]);
-				Assert::AreEqual<BITMASK>(bitmask[3], bm_castle[B][CASTLE_SHORT]);
+				Assert::AreEqual<BITMASK>(castle[0], bm_castle[W][CASTLE_LONG]);
+				Assert::AreEqual<BITMASK>(castle[1], bm_castle[W][CASTLE_SHORT]);
+				Assert::AreEqual<BITMASK>(castle[2], bm_castle[B][CASTLE_LONG]);
+				Assert::AreEqual<BITMASK>(castle[3], bm_castle[B][CASTLE_SHORT]);
+				Assert::AreEqual<BITMASK>(castle_rook_flip[C1], bm_castle_rook_flip[C1]);
+				Assert::AreEqual<BITMASK>(castle_rook_flip[G1], bm_castle_rook_flip[G1]);
+				Assert::AreEqual<BITMASK>(castle_rook_flip[C8], bm_castle_rook_flip[C8]);
+				Assert::AreEqual<BITMASK>(castle_rook_flip[G8], bm_castle_rook_flip[G8]);
 			}
 		};
 	}

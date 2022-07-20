@@ -157,7 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Koen.Chess\testutilities.cpp" />
     <ClCompile Include="BitBoardTest.cpp" />
     <ClCompile Include="BitmaskTest.cpp" />
     <ClCompile Include="GenerateTest.cpp" />
@@ -168,10 +167,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StringUtilitiesTest.cpp" />
+    <ClCompile Include="TestMoveGeneration.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Koen.Chess\testutilities.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestMoveGeneration.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Koen.Chess\Koen.Chess.vcxproj">

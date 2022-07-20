@@ -30,7 +30,7 @@
     <ClCompile Include="StringUtilitiesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Koen.Chess\testutilities.cpp">
+    <ClCompile Include="TestMoveGeneration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Koen.Chess\testutilities.h">
+    <ClInclude Include="TestMoveGeneration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

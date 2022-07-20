@@ -11,6 +11,7 @@
 #include "../Koen.Chess/generate.h"
 #include "../Koen.Chess/stringutilities.h"
 #include "../Koen.Chess/testutilities.h"
+#include "TestMoveGeneration.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -25,10 +26,34 @@ namespace Koen {
 
 			TEST_METHOD(test_Generate)
 			{
-				assertGenerateMoves("Ke1 Xd1f1 => d2 e2 f2 !d1 !f1");
-				assertGenerateMoves("Ke1 xd1f1 => d2 e2 f2 xd1 xf1");
-				assertGenerateMoves("B ke1 Xd1f1 => d2 e2 f2 xd1 xf1");
-				assertGenerateMoves("B ke1 xd1f1 => d2 e2 f2 !d1 !f1");
+				// Test king moves and captures.
+				TestMoveGeneration::create()
+					.arrange("8/8/8/8/8/8/4b3/3rKr2 w - - 0 1")
+						.act("Ke1d2").assertLegal("8/8/8/8/8/8/3Kb3/3r1r2 b - - 0 1", "Legal king move to d2.")
+						.act("Ke1xe2").assertLegal("8/8/8/8/8/8/4K3/3r1r2 b - - 0 1", "Legal king move to e2.")
+						.act("Ke1f2").assertLegal("8/8/8/8/8/8/4bK2/3r1r2 b - - 0 1", "Legal king move to f2.")
+						.act("Ke1xd1").assertLegal("8/8/8/8/8/8/4b3/3K1r2 b - - 0 1", "Legal king move capturing enemy rook")
+						.act("Ke1xf1").assertLegal("8/8/8/8/8/8/4b3/3r1K2 b - - 0 1", "Legal king move capturing enemy rook")
+					.arrange("8/8/8/8/8/8/4b3/3RKR2 w - - 0 1")
+						.act("Ke1xd1").assertIllegal("Illegal king move capturing own rook")
+						.act("Ke1xf1").assertIllegal("Illegal king move capturing own rook");
+
+				// Test King can castle. 
+				// TODO: CASTLE - check is not considered yet!!
+				// TODO: CASTLE - attacked squares aren't considered yet!!
+				// TODO: Black king not tested yet!!
+				TestMoveGeneration::create()
+					.arrange("8/8/8/8/8/8/8/R3K2R w KQkq - 0 1")
+						.act("0-0-0").assertLegal("8/8/8/8/8/8/8/2KR3R b kq - 0 1", "Legal white castles long")
+						.act("0-0").assertLegal("8/8/8/8/8/8/8/R4RK1 b kq - 0 1", "Legal white castles short");
+				  //.act("Ra1a8")
+					//.assertLegal("R7/8/8/8/8/8/8/4K2R b Kkg - 0 1", "Clear castle long permission because rook had moved.")
+					//.act("Rh1h8")
+					//.assertLegal("7R/8/8/8/8/8/8/R3K3 b Qkg - 0 1", "Clear castle long permission because rook had moved.")
+
+					//.arrange("8/8/8/8/8/8/8/R2BKB1R w KQ - 0 1")
+					//	.act("Ke1b1").assertIllegal("Illegal white castles long because d1 is blocked")
+					//	.act("Ke1g1").assertIllegal("Illegal white castles long because f1 is blocked");
 			}
 
 
@@ -60,12 +85,16 @@ namespace Koen {
 			TEST_METHOD(test_ToMoveString)
 			{
 				// Arrange
-				Move normalMove, captureMove;
+				Move normalMove;
+				normalMove.piece = R;
 				normalMove.from = A1;
-				captureMove.from = A1;
 				normalMove.to = H8;
-				captureMove.to = H8;
 				normalMove.capturedPiece = E;
+				
+				Move captureMove;
+				captureMove.piece = Q;
+				captureMove.from = A1;
+				captureMove.to = H8;				
 				captureMove.capturedPiece = P;
 				
 				// Act
@@ -75,8 +104,8 @@ namespace Koen {
 				// Assert
 				Logger::WriteMessage(normalMoveStr.c_str());
 				Logger::WriteMessage(captureMoveStr.c_str());
-				Assert::AreEqual<string>("a1h8", normalMoveStr);
-				Assert::AreEqual<string>("a1xh8", captureMoveStr);
+				Assert::AreEqual<string>("Ra1h8", normalMoveStr);
+				Assert::AreEqual<string>("Qa1xh8", captureMoveStr);
 			}
 		};
 	}
