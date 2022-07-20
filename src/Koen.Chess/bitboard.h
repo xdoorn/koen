@@ -35,7 +35,7 @@ const string pieceToSymbol[2][7]
 
 // Piece symbol like PNBRQK & pnbrqk to color integer conversion (e.g. W = 0, B = 1, E = 7)
 // The table starts relative from ASCII's 'A' and ends with 'z'
-const int colorSymbolToInteger[]
+const int colorSymbolToInteger[58]
 {
   W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
   W, W, W, W, W, W, W, W, W, W, W, W, W, W,
@@ -49,9 +49,6 @@ const int colorSymbolToInteger[]
 const int pieceSymbolToInteger[]
 {
   X, B, X, X, X, X, X, X, X, X, K, X, X, N, X, P, Q, R,
-  X, X, X, X, X, X, X, X, X, X, X, X, X, X,
-  X, B, X, X, X, X, X, X, X, X, K, X, X, N, X, P, Q, R, 
-  X, X, X, X, X, X, X, X
 };
 
 
@@ -71,6 +68,7 @@ const int initialBoard[64] =
 void clearBitBoard(BitBoard& io_bitBoard);
 void startBitBoard(BitBoard& io_bitBoard);
 void setupBitBoard(BitBoard& io_bitBoard, int i_color, int i_piece, int i_square);
+BitBoard mirrorBitBoard(BitBoard& i_bitBoard);
 void fenToBitBoard(string i_fen, BitBoard& io_bitBoard);
 string bitBoardToFen(BitBoard i_bitBoard);
 string toBitBoard1DString(BitBoard i_bitBoard);

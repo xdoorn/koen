@@ -122,6 +122,20 @@ void makeMove(Move i_move, BitBoard& io_bitBoard)
     BITMASK_CLEAR(io_bitBoard.castle, bm_castle_rook_from[io_bitBoard.side][i_move.from]);
   }
 
+  if (i_move.piece == P || i_move.capturedPiece != E)
+  {
+    io_bitBoard.halfMove50DrawRule = 0;
+  }
+  else
+  {
+    ++io_bitBoard.halfMove50DrawRule;
+  }
+
+  if (io_bitBoard.side == B)
+  {
+    ++io_bitBoard.fullMoveNumber;
+  }
+
   // Flip side to move.
   io_bitBoard.side ^= 1;
   io_bitBoard.xside ^= 1;

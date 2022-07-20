@@ -42,6 +42,21 @@ namespace Koen {
 			}
 
 
+			TEST_METHOD(test_MirrorBitBoard)
+			{
+				// Arrange
+				BitBoard bitBoard;
+				fenToBitBoard("8/8/8/8/8/8/8/2KR3R b Qk - 1 1", bitBoard);
+				
+				// Act
+				BitBoard mirroredBitBoard = mirrorBitBoard(bitBoard);
+
+				// Assert
+				Logger::WriteMessage(toBitBoard1DString(mirroredBitBoard).c_str());
+				Assert::AreEqual<string>("2kr3r/8/8/8/8/8/8/8 w Kq - 1 1", bitBoardToFen(mirroredBitBoard));
+			}
+
+
 			TEST_METHOD(test_BitBoardFenConversionVisaVersa)
 			{
 				// Arrange

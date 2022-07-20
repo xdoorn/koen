@@ -36,6 +36,51 @@ void clearBitBoard(BitBoard& io_bitBoard)
 }
 
 
+BitBoard mirrorBitBoard(BitBoard& i_bitBoard)
+{
+  BitBoard mirroredBitBoard;
+  clearBitBoard(mirroredBitBoard);
+
+  mirroredBitBoard.fullMoveNumber = i_bitBoard.fullMoveNumber;
+  mirroredBitBoard.halfMove50DrawRule = i_bitBoard.halfMove50DrawRule;
+  mirroredBitBoard.side = i_bitBoard.side ^ 1;
+  mirroredBitBoard.xside = i_bitBoard.xside ^ 1;
+  
+  for (int s = 0; s < 64; ++s)
+  {
+    int xs = ix_mirror[s];
+
+    if (BIT_CHECK(i_bitBoard.enpassant, s))
+    {
+      BIT_SET(mirroredBitBoard.enpassant, xs);
+    }
+
+    if (BIT_CHECK(i_bitBoard.castle, s))
+    {
+      BIT_SET(mirroredBitBoard.castle, xs);
+    }
+
+    for (int cp = 0; cp < 12; ++cp)
+    {
+      int c = cp % 2;
+      int xc = c ^ 1;
+      int p = cp / 2;
+      if (BIT_CHECK(i_bitBoard.pieces[c][p], s))
+      {
+        BIT_SET(mirroredBitBoard.pieces[xc][p], xs);
+        BIT_SET(mirroredBitBoard.army[xc], xs);
+        BIT_SET(mirroredBitBoard.occupied, xs);
+        mirroredBitBoard.squares[xc] = p;
+      }
+    }
+  }
+
+  mirroredBitBoard.xoccupied = ~mirroredBitBoard.occupied;
+
+  return mirroredBitBoard;
+}
+
+
 void startBitBoard(BitBoard& io_bitBoard)
 {
   io_bitBoard.pieces[W][P] = bm_rank[RANK_2];
@@ -118,19 +163,20 @@ void fenToBitBoard(string i_fen, BitBoard& io_bitBoard)
   int s = 0;
   for (char const& symbol : position)
   {
+    if (symbol == '/')
+    {
+      continue;
+    }
+
     if (isdigit(symbol))
     {
       s += symbol - '0';
       continue;
     }
 
-    if (symbol == '/')
-    {
-      continue;
-    }
-
-    int c = colorSymbolToInteger[(int) (symbol - 'A')];
-    int p = pieceSymbolToInteger[(int) (symbol - 'A')];
+    int ixPieceSymbol = toupper(symbol) - 65;
+    int p = pieceSymbolToInteger[ixPieceSymbol];
+    int c = isupper(symbol) ? W : B;
 
     BIT_SET(io_bitBoard.pieces[c][p], s);
     BIT_SET(io_bitBoard.army[c], s);
@@ -294,7 +340,30 @@ string toBitBoard1DString(BitBoard i_bitBoard)
 {
   string result = "";
 
-  result += "Occupied   = \t" + toBitMask1DString(i_bitBoard.occupied);
+  string squareString = "";
+  for (int s = 0; s < 64; ++s)
+  {
+    int p = i_bitBoard.squares[s];
+
+    squareString += " ";
+    if (p == E)
+    {
+      squareString += "0";
+    }
+    else
+    {
+      squareString += "" + pieceToSymbol[W][p];
+    }
+
+    if (s % 8 == 7)
+    {
+      squareString += " /";
+    }
+  }
+
+  result += "Fen        = \t " + bitBoardToFen(i_bitBoard);
+  result += "\nSquares    = \t" + squareString;
+  result += "\nOccupied   = \t" + toBitMask1DString(i_bitBoard.occupied);
   result += "\nXoccupied  = \t" + toBitMask1DString(i_bitBoard.xoccupied);
   result += "\nArmy[W]    = \t" + toBitMask1DString(i_bitBoard.army[W]);
   result += "\nPawns[W]   = \t" + toBitMask1DString(i_bitBoard.pieces[W][P]);
@@ -310,6 +379,8 @@ string toBitBoard1DString(BitBoard i_bitBoard)
   result += "\nRooks[B]   = \t" + toBitMask1DString(i_bitBoard.pieces[B][R]);
   result += "\nQueens[B]  = \t" + toBitMask1DString(i_bitBoard.pieces[B][Q]);
   result += "\nKing[B]    = \t" + toBitMask1DString(i_bitBoard.pieces[B][K]);
+  result += "\nCastle     = \t" + toBitMask1DString(i_bitBoard.castle);
+  result += "\nEnpassant  = \t" + toBitMask1DString(i_bitBoard.enpassant);
 
   return result;
 }

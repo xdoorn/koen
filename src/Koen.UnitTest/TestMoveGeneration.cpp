@@ -21,6 +21,12 @@ TestMoveGeneration TestMoveGeneration::create()
 TestMoveGeneration TestMoveGeneration::arrange(string i_fen)
 {
   m_fen = i_fen;
+
+  BitBoard bitBoard;
+  fenToBitBoard(i_fen, bitBoard);
+  BitBoard xBitBoard = mirrorBitBoard(bitBoard);
+  m_xfen = bitBoardToFen(xBitBoard);
+
   return *this;
 }
 
@@ -28,6 +34,11 @@ TestMoveGeneration TestMoveGeneration::arrange(string i_fen)
 TestMoveGeneration TestMoveGeneration::arrange(BitBoard i_bitBoard)
 {
   m_fen = bitBoardToFen(i_bitBoard);
+
+  // Mirror the fen;
+  BitBoard xBitBoard = mirrorBitBoard(i_bitBoard);
+  m_xfen = bitBoardToFen(xBitBoard);
+
   return *this;
 }
 
@@ -35,6 +46,7 @@ TestMoveGeneration TestMoveGeneration::arrange(BitBoard i_bitBoard)
 TestMoveGeneration TestMoveGeneration::act(string i_move)
 {
   m_move.piece = E;
+  m_xmove.piece = E;
   
   BitBoard bitBoard;
   fenToBitBoard(m_fen, bitBoard);
@@ -49,6 +61,26 @@ TestMoveGeneration TestMoveGeneration::act(string i_move)
     }
   }
 
+  // Mirror
+  BitBoard xBitBoard;
+  fenToBitBoard(m_xfen, xBitBoard);
+
+  for (Move move : generateMoves(xBitBoard))
+  {
+    Move xmove;
+    xmove.piece = move.piece;
+    xmove.from = ix_mirror[move.from];
+    xmove.to = ix_mirror[move.to];
+    xmove.capturedPiece = move.capturedPiece;
+
+    string moveString = toMoveString(xmove);
+    if (moveString == i_move)
+    {
+      m_xmove = move;
+      break;
+    }
+  }
+  
   return *this;
 }
 
@@ -56,14 +88,32 @@ TestMoveGeneration TestMoveGeneration::act(string i_move)
 TestMoveGeneration TestMoveGeneration::assertLegal(string i_expectedFen, string i_message)
 {
   Assert::IsFalse(m_move.piece == E, toWString(i_message).c_str());
+  Assert::IsFalse(m_xmove.piece == E, toWString(i_message + " [Mirror]").c_str());
 
   BitBoard bitBoard;
   fenToBitBoard(m_fen, bitBoard);
-
   makeMove(m_move, bitBoard);
   string actualFen = bitBoardToFen(bitBoard);
-
   Assert::AreEqual<string>(i_expectedFen, actualFen, toWString(i_message).c_str());
+
+  // Mirror
+  BitBoard xActualBitBoard;
+  fenToBitBoard(m_xfen, xActualBitBoard);
+  makeMove(m_xmove, xActualBitBoard);
+  string xActualFen = bitBoardToFen(xActualBitBoard);
+  BitBoard xExpectedBitBoard;
+  fenToBitBoard(i_expectedFen, xExpectedBitBoard);
+  xExpectedBitBoard = mirrorBitBoard(xExpectedBitBoard);
+  if (xExpectedBitBoard.side == W)
+  {
+    ++xExpectedBitBoard.fullMoveNumber;
+  }
+  else
+  {
+    --xExpectedBitBoard.fullMoveNumber;
+  }
+  string xExpectedFen = bitBoardToFen(xExpectedBitBoard);
+  Assert::AreEqual<string>(xExpectedFen, xActualFen, toWString(i_message + " [Mirror]").c_str());
 
   return *this;
 }
@@ -72,5 +122,7 @@ TestMoveGeneration TestMoveGeneration::assertLegal(string i_expectedFen, string 
 TestMoveGeneration TestMoveGeneration::assertIllegal(string i_message)
 {
   Assert::IsTrue(m_move.piece == E, toWString(i_message).c_str());
+  Assert::IsTrue(m_xmove.piece == E, toWString(i_message + " [Mirror]").c_str());
+
   return *this;
 }

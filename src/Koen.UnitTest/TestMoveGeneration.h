@@ -17,7 +17,10 @@ public:
   TestMoveGeneration assertLegal(string i_expectedFen, string i_message = "");
   TestMoveGeneration assertIllegal(string i_message = "");
 
+private:
   string m_fen;
+  string m_xfen;
   Move m_move;
+  Move m_xmove;
 };
 
