@@ -189,7 +189,7 @@ namespace Koen {
 
 					// Act
 					BITMASK kingsquare = bm_squares[s];
-				  if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_A]))
+					if (!BITMASK_CHECK_ANY(kingsquare, bm_rank[RANK_8] | bm_file[FILE_A]))
 					{
 						kingmoves[s] |= kingsquare >> 9; // NW
 					}
@@ -227,6 +227,106 @@ namespace Koen {
 				}
 
 				Logger::WriteMessage(toBitMaskArrayVariable(kingmoves, "bm_kingmoves").c_str());
+			}
+
+			
+			TEST_METHOD(test_bm_rangemoves)
+			{
+				// Arrange
+				BITMASK north_moves[64];
+				BITMASK northeast_moves[64];
+				BITMASK east_moves[64];
+				BITMASK southeast_moves[64];
+				BITMASK south_moves[64];
+				BITMASK southwest_moves[64];
+				BITMASK west_moves[64];
+				BITMASK northwest_moves[64];
+
+				for (int s = 0; s < 64; ++s)
+				{
+					int file = s % 8;
+					int rank = s / 8;
+
+					// Act North direction
+					north_moves[s] = bm_empty;
+					for (int n = 1; n <= rank; ++n)
+					{
+						BIT_SET(north_moves[s], s - (n * 8));
+					}
+
+					// Act North East direction
+					northeast_moves[s] = bm_empty;
+					for (int ne = 1; ne <= min(7 - file, rank); ++ne)
+					{
+						BIT_SET(northeast_moves[s], s - (ne * 7));
+					}
+
+					// Act East direction
+					east_moves[s] = bm_empty;
+					for (int e = 1; e <= 7 - file; ++e)
+					{
+						BIT_SET(east_moves[s], s + (e * 1));
+					}
+
+					// Act South East direction
+					southeast_moves[s] = bm_empty;
+					for (int se = 1; se <= min(7 - file, 7 - rank); ++se)
+					{
+						BIT_SET(southeast_moves[s], s + (se * 9));
+					}
+
+					// Act South direction
+					south_moves[s] = bm_empty;
+					for (int n = 1; n <= (7 - rank); ++n)
+					{
+						BIT_SET(south_moves[s], s + (n * 8));
+					}
+
+					// Act South West direction
+					southwest_moves[s] = bm_empty;
+					for (int sw = 1; sw <= min(file, 7 - rank); ++sw)
+					{
+						BIT_SET(southwest_moves[s], s + (sw * 7));
+					}
+
+					// Act West direction
+					west_moves[s] = bm_empty;
+					for (int w = 1; w <= file; ++w)
+					{
+						BIT_SET(west_moves[s], s - (w * 1));
+					}
+
+					// Act North West direction
+					northwest_moves[s] = bm_empty;
+					for (int nw = 1; nw <= min(file, rank); ++nw)
+					{
+						BIT_SET(northwest_moves[s], s - (nw * 9));
+					}
+
+					BITMASK queenmove = bm_empty;
+					queenmove ^= north_moves[s] ^ northeast_moves[s] ^ east_moves[s] ^ southeast_moves[s];
+					queenmove ^= south_moves[s] ^ southwest_moves[s] ^ west_moves[s] ^ northwest_moves[s];
+					Logger::WriteMessage("\n\n");
+					Logger::WriteMessage(toBitMask2DString(queenmove).c_str());
+
+					Assert::AreEqual<BITMASK>(north_moves[s], bm_rangemoves[NORTH][s]);
+					Assert::AreEqual<BITMASK>(northeast_moves[s], bm_rangemoves[NORTHEAST][s]);
+					Assert::AreEqual<BITMASK>(east_moves[s], bm_rangemoves[EAST][s]);
+					Assert::AreEqual<BITMASK>(southeast_moves[s], bm_rangemoves[SOUTHEAST][s]);
+					Assert::AreEqual<BITMASK>(south_moves[s], bm_rangemoves[SOUTH][s]);
+					Assert::AreEqual<BITMASK>(southwest_moves[s], bm_rangemoves[SOUTHWEST][s]);
+					Assert::AreEqual<BITMASK>(west_moves[s], bm_rangemoves[WEST][s]);
+					Assert::AreEqual<BITMASK>(northwest_moves[s], bm_rangemoves[NORTHWEST][s]);
+				}
+
+				Logger::WriteMessage(toBitMaskArrayVariable(north_moves, "bm_rangemoves[NORTH]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(northeast_moves, "bm_rangemoves[NORTHEAST]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(east_moves, "bm_rangemoves[EAST]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(southeast_moves, "bm_rangemoves[SOUTHEAST]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(south_moves, "bm_rangemoves[SOUTH]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(southwest_moves, "bm_rangemoves[SOUTHWEST]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(west_moves, "bm_rangemoves[WEST]").c_str());
+				Logger::WriteMessage(toBitMaskArrayVariable(northwest_moves, "bm_rangemoves[NORTHWEST]").c_str());
 			}
 
 
