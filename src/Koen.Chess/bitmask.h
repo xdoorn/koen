@@ -82,6 +82,91 @@ const int ix_mirror[64]
   A8, B8, C8, D8, E8, F8, G8, H8,
 };
 
+const int _VOID_ = -1;
+const int ix_destination[8][64]
+{ 
+  { // NORTH
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+    A7 - 8, B7 - 8, C7 - 8, D7 - 8, E7 - 8, F7 - 8, G7 - 8, H7 - 8,
+    A6 - 8, B6 - 8, C6 - 8, D6 - 8, E6 - 8, F6 - 8, G6 - 8, H6 - 8,
+    A5 - 8, B5 - 8, C5 - 8, D5 - 8, E5 - 8, F5 - 8, G5 - 8, H5 - 8,
+    A4 - 8, B4 - 8, C4 - 8, D4 - 8, E4 - 8, F4 - 8, G4 - 8, H4 - 8,
+    A3 - 8, B3 - 8, C3 - 8, D3 - 8, E3 - 8, F3 - 8, G3 - 8, H3 - 8,
+    A2 - 8, B2 - 8, C2 - 8, D2 - 8, E2 - 8, F2 - 8, G2 - 8, H2 - 8,
+    A1 - 8, B1 - 8, C1 - 8, D1 - 8, E1 - 8, F1 - 8, G1 - 8, H1 - 8,
+  },
+  { // NORTH EAST
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+    A7 - 7, B7 - 7, C7 - 7, D7 - 7, E7 - 7, F7 - 7, G7 - 7, _VOID_,
+    A6 - 7, B6 - 7, C6 - 7, D6 - 7, E6 - 7, F6 - 7, G6 - 7, _VOID_,
+    A5 - 7, B5 - 7, C5 - 7, D5 - 7, E5 - 7, F5 - 7, G5 - 7, _VOID_,
+    A4 - 7, B4 - 7, C4 - 7, D4 - 7, E4 - 7, F4 - 7, G4 - 7, _VOID_,
+    A3 - 7, B3 - 7, C3 - 7, D3 - 7, E3 - 7, F3 - 7, G3 - 7, _VOID_,
+    A2 - 7, B2 - 7, C2 - 7, D2 - 7, E2 - 7, F2 - 7, G2 - 7, _VOID_,
+    A1 - 7, B1 - 7, C1 - 7, D1 - 7, E1 - 7, F1 - 7, G1 - 7, _VOID_,
+  },
+  { // EAST
+    A8 + 1, B8 + 1, C8 + 1, D8 + 1, E8 + 1, F8 + 1, G8 + 1, _VOID_,
+    A7 + 1, B7 + 1, C7 + 1, D7 + 1, E7 + 1, F7 + 1, G7 + 1, _VOID_,
+    A6 + 1, B6 + 1, C6 + 1, D6 + 1, E6 + 1, F6 + 1, G6 + 1, _VOID_,
+    A5 + 1, B5 + 1, C5 + 1, D5 + 1, E5 + 1, F5 + 1, G5 + 1, _VOID_,
+    A4 + 1, B4 + 1, C4 + 1, D4 + 1, E4 + 1, F4 + 1, G4 + 1, _VOID_,
+    A3 + 1, B3 + 1, C3 + 1, D3 + 1, E3 + 1, F3 + 1, G3 + 1, _VOID_,
+    A2 + 1, B2 + 1, C2 + 1, D2 + 1, E2 + 1, F2 + 1, G2 + 1, _VOID_,
+    A1 + 1, B1 + 1, C1 + 1, D1 + 1, E1 + 1, F1 + 1, G1 + 1, _VOID_,
+  },
+  { // SOUTH EAST
+    A8 + 9, B8 + 9, C8 + 9, D8 + 9, E8 + 9, F8 + 9, G8 + 9, _VOID_,
+    A7 + 9, B7 + 9, C7 + 9, D7 + 9, E7 + 9, F7 + 9, G7 + 9, _VOID_,
+    A6 + 9, B6 + 9, C6 + 9, D6 + 9, E6 + 9, F6 + 9, G6 + 9, _VOID_,
+    A5 + 9, B5 + 9, C5 + 9, D5 + 9, E5 + 9, F5 + 9, G5 + 9, _VOID_,
+    A4 + 9, B4 + 9, C4 + 9, D4 + 9, E4 + 9, F4 + 9, G4 + 9, _VOID_,
+    A3 + 9, B3 + 9, C3 + 9, D3 + 9, E3 + 9, F3 + 9, G3 + 9, _VOID_,
+    A2 + 9, B2 + 9, C2 + 9, D2 + 9, E2 + 9, F2 + 9, G2 + 9, _VOID_,
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+  },
+  { // SOUTH
+    A8 + 8, B8 + 8, C8 + 8, D8 + 8, E8 + 8, F8 + 8, G8 + 8, H8 + 8,
+    A7 + 8, B7 + 8, C7 + 8, D7 + 8, E7 + 8, F7 + 8, G7 + 8, H7 + 8,
+    A6 + 8, B6 + 8, C6 + 8, D6 + 8, E6 + 8, F6 + 8, G6 + 8, H6 + 8,
+    A5 + 8, B5 + 8, C5 + 8, D5 + 8, E5 + 8, F5 + 8, G5 + 8, H5 + 8,
+    A4 + 8, B4 + 8, C4 + 8, D4 + 8, E4 + 8, F4 + 8, G4 + 8, H4 + 8,
+    A3 + 8, B3 + 8, C3 + 8, D3 + 8, E3 + 8, F3 + 8, G3 + 8, H3 + 8,
+    A2 + 8, B2 + 8, C2 + 8, D2 + 8, E2 + 8, F2 + 8, G2 + 8, H2 + 8,
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+  },
+  { // SOUTH WEST
+    _VOID_, B8 + 7, C8 + 7, D8 + 7, E8 + 7, F8 + 7, G8 + 7, H8 + 7,
+    _VOID_, B7 + 7, C7 + 7, D7 + 7, E7 + 7, F7 + 7, G7 + 7, H7 + 7,
+    _VOID_, B6 + 7, C6 + 7, D6 + 7, E6 + 7, F6 + 7, G6 + 7, H6 + 7,
+    _VOID_, B5 + 7, C5 + 7, D5 + 7, E5 + 7, F5 + 7, G5 + 7, H5 + 7,
+    _VOID_, B4 + 7, C4 + 7, D4 + 7, E4 + 7, F4 + 7, G4 + 7, H4 + 7,
+    _VOID_, B3 + 7, C3 + 7, D3 + 7, E3 + 7, F3 + 7, G3 + 7, H3 + 7,
+    _VOID_, B2 + 7, C2 + 7, D2 + 7, E2 + 7, F2 + 7, G2 + 7, H2 + 7,
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+  },
+  { // WEST
+    _VOID_, B7 - 1, C7 - 1, D7 - 1, E7 - 1, F7 - 1, G7 - 1, H8 - 1,
+    _VOID_, B8 - 1, C8 - 1, D8 - 1, E8 - 1, F8 - 1, G8 - 1, H7 - 1,
+    _VOID_, B6 - 1, C6 - 1, D6 - 1, E6 - 1, F6 - 1, G6 - 1, H6 - 1,
+    _VOID_, B5 - 1, C5 - 1, D5 - 1, E5 - 1, F5 - 1, G5 - 1, H5 - 1,
+    _VOID_, B4 - 1, C4 - 1, D4 - 1, E4 - 1, F4 - 1, G4 - 1, H4 - 1,
+    _VOID_, B3 - 1, C3 - 1, D3 - 1, E3 - 1, F3 - 1, G3 - 1, H3 - 1,
+    _VOID_, B2 - 1, C2 - 1, D2 - 1, E2 - 1, F2 - 1, G2 - 1, H2 - 1,
+    _VOID_, B1 - 1, C1 - 1, D1 - 1, E1 - 1, F1 - 1, G1 - 1, H1 - 1,
+  },
+  { // NORTH WEST
+    _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
+    _VOID_, B8 - 9, C8 - 9, D8 - 9, E8 - 9, F8 - 9, G8 - 9, H7 - 9,
+    _VOID_, B6 - 9, C6 - 9, D6 - 9, E6 - 9, F6 - 9, G6 - 9, H6 - 9,
+    _VOID_, B5 - 9, C5 - 9, D5 - 9, E5 - 9, F5 - 9, G5 - 9, H5 - 9,
+    _VOID_, B4 - 9, C4 - 9, D4 - 9, E4 - 9, F4 - 9, G4 - 9, H4 - 9,
+    _VOID_, B3 - 9, C3 - 9, D3 - 9, E3 - 9, F3 - 9, G3 - 9, H3 - 9,
+    _VOID_, B2 - 9, C2 - 9, D2 - 9, E2 - 9, F2 - 9, G2 - 9, H2 - 9,
+    _VOID_, B1 - 9, C1 - 9, D1 - 9, E1 - 9, F1 - 9, G1 - 9, H1 - 9,
+  },
+};
+
 const BITMASK bm_empty = 0x0000000000000000;
 const BITMASK bm_full =  0xFFFFFFFFFFFFFFFF;
 const BITMASK bm_camp[2] = { 0xFFFFFFFF00000000, 0x00000000FFFFFFFF };
@@ -264,6 +349,9 @@ const BITMASK bm_rangemoves[8][64] =
     0x0000000000000000, 0x0001000000000000, 0x0002010000000000, 0x0004020100000000, 0x0008040201000000, 0x0010080402010000, 0x0020100804020100, 0x0040201008040201,
   }
 };
+
+const int ix_range_pieces[]{ B, R, Q };
+const int ix_range_directions[3][2]{ { 1, 2 }, { 0, 2 }, { 0, 1 } };
 
 // https://www.chessprogramming.org/BitScan#De_Bruijn_Multiplication
 const int bitScanIndices[64] = 

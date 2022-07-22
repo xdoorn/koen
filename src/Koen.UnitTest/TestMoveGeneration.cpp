@@ -51,7 +51,8 @@ TestMoveGeneration TestMoveGeneration::act(string i_move)
   BitBoard bitBoard;
   fenToBitBoard(m_fen, bitBoard);
 
-  for (Move move : generateMoves(bitBoard))
+  auto moves = generateMoves(bitBoard);
+  for (Move move : moves)
   {
     string moveString = toMoveString(move);
     if (moveString == i_move)

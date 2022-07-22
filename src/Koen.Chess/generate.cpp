@@ -12,10 +12,11 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
 
   generateCastleMoves(i_bitBoard, moves);
 
-  BITMASK bm1 = i_bitBoard.pieces[i_bitBoard.side][K];
-  if (bm1)
+  // King
+  BITMASK bm_piece = i_bitBoard.pieces[i_bitBoard.side][K];
+  if (bm_piece)
   { // Expect always one king on the board, therefore no loop here.
-    int from = bitScan(bm1);
+    int from = bitScan(bm_piece);
 
     BITMASK bm2 = bm_kingmoves[from] & i_bitBoard.army[i_bitBoard.xside];
     while (bm2)
@@ -37,6 +38,42 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
       BIT_CLEAR(bm2, to);
     }
   }
+
+  // Bishop, Rook, Queen
+  for (int brq = 0; brq < 3; ++brq)
+  {
+    bm_piece = i_bitBoard.pieces[i_bitBoard.side][ix_range_pieces[brq]];
+    while (bm_piece)
+    {
+      int from = bitScan(bm_piece);
+
+      for (int d = ix_range_directions[brq][0]; d < 8; d += ix_range_directions[brq][1])
+      {
+        for (int to = ix_destination[d][from]; to >= 0; to = ix_destination[d][to])
+        {
+          if (bm_squares[to] & i_bitBoard.army[i_bitBoard.side])
+          { 
+            // Cannot capture or jump friendly piece.
+            break;
+          }
+
+          if (bm_squares[to] & i_bitBoard.army[i_bitBoard.xside])
+          {
+            // Capture enemy piece, however cannot jump.
+            addMoveCapture(moves, ix_range_pieces[brq], from, to, i_bitBoard.squares[to]);
+            break;
+          }
+
+          // Move to empty square.
+          addMove(moves, ix_range_pieces[brq], from, to);
+        }
+      }
+
+      // Remove the bit to go to next bit.
+      BIT_CLEAR(bm_piece, from);
+    }
+  }
+
 
   return moves;
 }
