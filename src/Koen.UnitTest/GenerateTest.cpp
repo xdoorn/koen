@@ -123,7 +123,8 @@ namespace Koen {
 					.act("Qd5a5").assertIllegal("Illegal Qd5 cannot jump to west (3)")
 					.act("Qd5c6").assertLegal("8/1R1b4/2Q5/1B4B1/8/5r2/3Q4/8 b - - 1 1", "Legal Qd5 move to north-west (1)")
 					.act("Qd5b7").assertIllegal("Illegal Qd5 cannot capture friendly rook to north-west (2)")
-					.act("Qd5a8").assertIllegal("Illegal Qd5 cannot jump to north-west (2)");
+					.act("Qd5a8").assertIllegal("Illegal Qd5 cannot jump to north-west (2)")
+					.act("Qd2d4").assertLegal("8/1R1b4/8/1B1Q2B1/3Q4/5r2/8/8 b - - 1 1", "Legal Qd2 move to north (2); which tests iterating two second queen.");
 			}
 
 

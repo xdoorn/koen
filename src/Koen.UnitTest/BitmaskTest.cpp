@@ -178,6 +178,65 @@ namespace Koen {
 			}
 
 
+			TEST_METHOD(test_bm_knightmoves)
+			{
+				// Arrange
+				BITMASK knightmoves[64];
+
+				for (int s = 0; s < 64; ++s)
+				{
+					// Act
+					knightmoves[s] = 0;
+
+					if (~(bm_file[FILE_H] | bm_rank[RANK_7] | bm_rank[RANK_8]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s - 15);
+					}
+					
+					if (~(bm_file[FILE_G] | bm_file[FILE_H] | bm_rank[RANK_8]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s - 6);
+					}
+					
+					if (~(bm_file[FILE_G] | bm_file[FILE_H] | bm_rank[RANK_1]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s + 10);
+					}
+					
+					if (~(bm_file[FILE_H] | bm_rank[RANK_2] | bm_rank[RANK_1]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s + 17);
+					}
+					
+					if (~(bm_file[FILE_A] | bm_rank[RANK_2] | bm_rank[RANK_1]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s + 15);
+					}
+					
+					if (~(bm_file[FILE_A] | bm_file[FILE_B] | bm_rank[RANK_1]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s + 6);
+					}
+					
+					if (~(bm_file[FILE_A] | bm_file[FILE_B] | bm_rank[RANK_8]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s - 10);
+					}
+					
+					if (~(bm_file[FILE_A] | bm_rank[RANK_7] | bm_rank[RANK_8]) & bm_squares[s])
+					{
+						BIT_SET(knightmoves[s], s - 17);
+					}
+
+					// Assert
+					Assert::AreEqual(knightmoves[s], bm_knightmoves[s]);
+				}
+
+				Logger::WriteMessage("\n\n");
+				Logger::WriteMessage(toBitMaskArrayVariable(knightmoves, "bm_knightmoves").c_str());
+			}
+
+
 			TEST_METHOD(test_bm_kingmoves)
 			{
 				// Arrange
