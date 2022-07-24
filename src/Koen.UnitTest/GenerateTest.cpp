@@ -51,6 +51,18 @@ namespace Koen {
 						.act("Ke1b1").assertIllegal("Illegal white castles long because d1 is blocked")
 						.act("Ke1g1").assertIllegal("Illegal white castles long because f1 is blocked");
 
+				// Test knight moves.
+				TestMoveGeneration::create()
+					.arrange("8/8/5q2/3N4/8/2R5/8/8 w - - 0 1")
+					.act("Nd5e7").assertLegal("8/4N3/5q2/8/8/2R5/8/8 b - - 1 1", "Legal knight move to north-north-east")
+				  .act("Nd5xf6").assertLegal("8/8/5N2/8/8/2R5/8/8 b - - 0 1", "Legal knight move to capture north-east-east")
+					.act("Nd5f4").assertLegal("8/8/5q2/8/5N2/2R5/8/8 b - - 1 1", "Legal knight move to south-east-east")
+					.act("Nd5e3").assertLegal("8/8/5q2/8/8/2R1N3/8/8 b - - 1 1", "Legal knight move to sourth-south-east")
+					.act("Nd5c3").assertIllegal("Illegal knight move to capture friendly rook to south-south-west")
+					.act("Nd5b4").assertLegal("8/8/5q2/8/1N6/2R5/8/8 b - - 1 1", "Legal knight move to south-west-west")
+					.act("Nd5b6").assertLegal("8/8/1N3q2/8/8/2R5/8/8 b - - 1 1", "Legal knight move to north-west-west")
+					.act("Nd5c7").assertLegal("8/2N5/5q2/8/8/2R5/8/8 b - - 1 1", "Legal knight move to north-west");
+
 				// Test bishop moves.
 				TestMoveGeneration::create()
 					.arrange("8/1R6/8/3B4/8/5r2/8/8 w - - 0 1")

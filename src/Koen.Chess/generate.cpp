@@ -18,25 +18,55 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
   { // Expect always one king on the board, therefore no loop here.
     int from = bitScan(bm_piece);
 
-    BITMASK bm2 = bm_kingmoves[from] & i_bitBoard.army[i_bitBoard.xside];
-    while (bm2)
+    BITMASK bm_to = bm_kingmoves[from] & i_bitBoard.army[i_bitBoard.xside];
+    while (bm_to)
     {
-      int to = bitScan(bm2);
+      int to = bitScan(bm_to);
       addMoveCapture(moves, K, from, to, i_bitBoard.squares[to]);
     
       // Remove the bit to go to next bit later.
-      BIT_CLEAR(bm2, to);
+      BIT_CLEAR(bm_to, to);
     }
 
-    bm2 = bm_kingmoves[from] & i_bitBoard.xoccupied;
-    while (bm2)
+    bm_to = bm_kingmoves[from] & i_bitBoard.xoccupied;
+    while (bm_to)
     {
-      int to = bitScan(bm2);
+      int to = bitScan(bm_to);
       addMove(moves, K, from, to);
       
       // Remove the bit to go to next bit later.
-      BIT_CLEAR(bm2, to);
+      BIT_CLEAR(bm_to, to);
     }
+  }
+
+  // Knight
+  bm_piece = i_bitBoard.pieces[i_bitBoard.side][N];
+  while (bm_piece)
+  {
+    int from = bitScan(bm_piece);
+
+    BITMASK bm_to = bm_knightmoves[from] & i_bitBoard.army[i_bitBoard.xside];
+    while (bm_to)
+    {
+      int to = bitScan(bm_to);
+      addMoveCapture(moves, N, from, to, i_bitBoard.squares[to]);
+
+      // Remove the bit to go to next bit later.
+      BIT_CLEAR(bm_to, to);
+    }
+
+    bm_to = bm_knightmoves[from] & i_bitBoard.xoccupied;
+    while (bm_to)
+    {
+      int to = bitScan(bm_to);
+      addMove(moves, N, from, to);
+
+      // Remove the bit to go to next bit later.
+      BIT_CLEAR(bm_to, to);
+    }
+
+    // Remove the bit to go to next bit later.
+    BIT_CLEAR(bm_piece, from);
   }
 
   // Bishop, Rook, Queen
@@ -73,7 +103,6 @@ vector<Move> generateMoves(BitBoard i_bitBoard)
       BIT_CLEAR(bm_piece, from);
     }
   }
-
 
   return moves;
 }
