@@ -13,6 +13,7 @@ typedef struct
   int from;
   int to;
   int capturedPiece;
+  int promotedPiece;
 } Move;
 
 
@@ -44,6 +45,8 @@ vector<Move> generateMoves(BitBoard i_bitBoard);
 void generateCastleMoves(BitBoard i_bitBoard, vector<Move>& io_moves);
 void addMove(vector<Move>& io_moves, int i_piece, int i_from, int i_to);
 void addMoveCapture(vector<Move>& io_moves, int i_piece, int i_from, int i_to, int i_capturedPiece);
+void addMovePromotion(vector<Move>& io_moves, int i_piece, int i_from, int i_to, int i_promotedPiece);
+void addMovePromotionCapture(vector<Move>& io_moves, int i_piece, int i_from, int i_to, int i_promotedPiece, int i_capturedPiece);
 void makeMove(Move i_move, BitBoard& io_bitBoard);
 void unmakeMove(Move i_move, BitBoard& io_bitBoard);
 string toMoveString(Move i_move);

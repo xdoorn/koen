@@ -40,6 +40,7 @@ enum
   K,     // King
   X,     // Any piece (used in unittests)
   E,     // Empty
+  EP,    // Pawn capture enpassant
 };
 
 // Direction
@@ -83,6 +84,13 @@ const int ix_mirror[64]
 };
 
 const int _VOID_ = -1;
+
+const int ix_white_or_black_directions[2][8]
+{
+  { NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST },
+  { SOUTH, SOUTHWEST, WEST, NORTHWEST, NORTH, NORTHEAST, EAST, SOUTHEAST },
+};
+
 const int ix_destination[8][64]
 { 
   { // NORTH
@@ -146,8 +154,8 @@ const int ix_destination[8][64]
     _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
   },
   { // WEST
-    _VOID_, B7 - 1, C7 - 1, D7 - 1, E7 - 1, F7 - 1, G7 - 1, H8 - 1,
-    _VOID_, B8 - 1, C8 - 1, D8 - 1, E8 - 1, F8 - 1, G8 - 1, H7 - 1,
+    _VOID_, B8 - 1, C8 - 1, D8 - 1, E8 - 1, F8 - 1, G8 - 1, H8 - 1,
+    _VOID_, B7 - 1, C7 - 1, D7 - 1, E7 - 1, F7 - 1, G7 - 1, H7 - 1,
     _VOID_, B6 - 1, C6 - 1, D6 - 1, E6 - 1, F6 - 1, G6 - 1, H6 - 1,
     _VOID_, B5 - 1, C5 - 1, D5 - 1, E5 - 1, F5 - 1, G5 - 1, H5 - 1,
     _VOID_, B4 - 1, C4 - 1, D4 - 1, E4 - 1, F4 - 1, G4 - 1, H4 - 1,
@@ -157,7 +165,7 @@ const int ix_destination[8][64]
   },
   { // NORTH WEST
     _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_, _VOID_,
-    _VOID_, B8 - 9, C8 - 9, D8 - 9, E8 - 9, F8 - 9, G8 - 9, H7 - 9,
+    _VOID_, B7 - 9, C7 - 9, D7 - 9, E7 - 9, F7 - 9, G7 - 9, H7 - 9,
     _VOID_, B6 - 9, C6 - 9, D6 - 9, E6 - 9, F6 - 9, G6 - 9, H6 - 9,
     _VOID_, B5 - 9, C5 - 9, D5 - 9, E5 - 9, F5 - 9, G5 - 9, H5 - 9,
     _VOID_, B4 - 9, C4 - 9, D4 - 9, E4 - 9, F4 - 9, G4 - 9, H4 - 9,
@@ -172,6 +180,8 @@ const BITMASK bm_full =  0xFFFFFFFFFFFFFFFF;
 const BITMASK bm_camp[2] = { 0xFFFFFFFF00000000, 0x00000000FFFFFFFF };
 const BITMASK bm_file[8] = { 0x0101010101010101, 0x0202020202020202, 0x0404040404040404, 0x0808080808080808, 0x1010101010101010, 0x2020202020202020, 0x4040404040404040, 0x8080808080808080 };
 const BITMASK bm_rank[8] = { 0x00000000000000FF, 0x000000000000FF00, 0x0000000000FF0000, 0x00000000FF000000, 0x000000FF00000000, 0x0000FF0000000000, 0x00FF000000000000, 0xFF00000000000000 };
+const BITMASK bm_second_or_seventh_rank[2] = { 0x00FF000000000000, 0x000000000000FF00 };
+const BITMASK bm_eighth_or_first_rank[2] = { 0x00000000000000FF, 0xFF00000000000000 };
 const BITMASK bm_squares[64] =
 {
   0x0000000000000001, 0x0000000000000002, 0x0000000000000004, 0x0000000000000008, 0x0000000000000010, 0x0000000000000020, 0x0000000000000040, 0x0000000000000080,
@@ -363,8 +373,8 @@ const BITMASK bm_rangemoves[8][64] =
   }
 };
 
-const int ix_range_pieces[]{ B, R, Q };
-const int ix_range_directions[3][2]{ { 1, 2 }, { 0, 2 }, { 0, 1 } };
+const int ix_slider_pieces[]{ B, R, Q };
+const int ix_slider_directions[3][2]{ { 1, 2 }, { 0, 2 }, { 0, 1 } };
 
 // https://www.chessprogramming.org/BitScan#De_Bruijn_Multiplication
 const int bitScanIndices[64] = 

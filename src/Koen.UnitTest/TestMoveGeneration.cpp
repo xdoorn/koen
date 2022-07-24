@@ -66,13 +66,15 @@ TestMoveGeneration TestMoveGeneration::act(string i_move)
   BitBoard xBitBoard;
   fenToBitBoard(m_xfen, xBitBoard);
 
-  for (Move move : generateMoves(xBitBoard))
+  moves = generateMoves(xBitBoard);
+  for (Move move : moves)
   {
     Move xmove;
     xmove.piece = move.piece;
     xmove.from = ix_mirror[move.from];
     xmove.to = ix_mirror[move.to];
     xmove.capturedPiece = move.capturedPiece;
+    xmove.promotedPiece = move.promotedPiece;
 
     string moveString = toMoveString(xmove);
     if (moveString == i_move)
